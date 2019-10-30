@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="icon_width_small">55dp</dimen>
+    <dimen name="icon_height_small">55dp</dimen>
+    <dimen name="icon_width_large">88dp</dimen>
+    <dimen name="icon_height_large">88dp</dimen>
+    <dimen name="cardWidth">150dp</dimen>
+    <dimen name="cardHeight">200dp</dimen>
+    <dimen name="icon_tiny_dimen">44dp</dimen>
+    <dimen name="height_medium">68dp</dimen>
+    <dimen name="margin_padding_small">5dp</dimen>
+    <dimen name="default_padding_margin">10dp</dimen>
+    <dimen name="media_controller_height">175dp</dimen>
+    <dimen name="image_margin">20dp</dimen>
+    <dimen name="card_view_radius">15dp</dimen>
+    <dimen name="num_of_columns">3</dimen>
+
+</resources>

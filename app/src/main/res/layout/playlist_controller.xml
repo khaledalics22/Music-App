@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_medium"
+    android:background="@color/colorAccent">
+
+    <ImageView
+        android:id="@+id/frame_artist_image"
+        android:layout_width="@dimen/icon_tiny_dimen"
+        android:layout_height="@dimen/icon_tiny_dimen"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/margin_padding_small"
+        android:contentDescription="@string/song_icon" />
+
+    <TextView
+        android:id="@+id/tv_song_name_plController"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/frame_artist_image"
+        android:layout_marginStart="@dimen/default_padding_margin"
+        android:layout_marginLeft="@dimen/default_padding_margin"
+        android:layout_toEndOf="@+id/frame_artist_image"
+        android:layout_toRightOf="@+id/frame_artist_image"
+        android:maxLines="1"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/tv_artist_plController"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_song_name_plController"
+        android:layout_marginStart="@dimen/default_padding_margin"
+        android:layout_marginLeft="@dimen/default_padding_margin"
+        android:layout_toEndOf="@+id/frame_artist_image"
+        android:layout_toRightOf="@+id/frame_artist_image"
+        android:maxLines="1"
+        android:textAppearance="?android:textAppearanceSmall"
+        android:textColor="@android:color/white" />
+
+    <ImageButton
+        android:id="@+id/iBtn_play"
+        style="@android:style/MediaButton.Pause"
+        android:layout_width="@dimen/icon_tiny_dimen"
+        android:layout_height="@dimen/icon_tiny_dimen"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/default_padding_margin" />
+</RelativeLayout>

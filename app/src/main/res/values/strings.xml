@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Music App</string>
+    <string name="song_icon">song icon</string>
+    <string name="play_iBtn">play iBtn</string>
+    <string name="prev_iBtn">previous iBtn</string>
+    <string name="next_iBtn">next iBtn</string>
+    <string name="song_name">song: %s</string>
+    <string name="Artist_name">Artist: %s </string>
+    <string name="song_path">Song Path: %s </string>
+    <string name="playing">playing</string>
+    <string name="paused">paused</string>
+    <string name="album">Album: %s</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="play_list">Playlist</string>
+    <string name="search">Search</string>
+    <string name="library">Library</string>
+    <string name="online">Online</string>
+    <string name="no_such_song">Not found! -_- </string>
+    <string name="finished">Finished</string>
+    <string name="last">Last</string>
+    <string name="first">First</string>
+    <string name="download">Download</string>
+    <string name="succeeded">Succeeded</string>
+    <string name="search_online">Search Online</string>
+
+
+</resources>
