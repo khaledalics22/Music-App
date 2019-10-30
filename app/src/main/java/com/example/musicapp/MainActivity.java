@@ -2,6 +2,8 @@ package com.example.musicapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -21,7 +22,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private ImageButton iBtnPlay;
     private ListView lvPlayList;
-
     public static ArrayList<Song> playList;
     private RelativeLayout playListController;
     public static Toast mToast;
@@ -31,27 +31,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        setNavBar();
         cacheViews();
-
-        playList = new ArrayList<Song>();
-        loadSongs();
-        mysong = new Media(MainActivity.this, playList);
+        if(playList==null) {
+            playList = new ArrayList<Song>();
+            loadSongs();
+            mysong = new Media();
+        }
+        else{
+            showController();
+        }
         SongItemAdapter playListAdapter = new SongItemAdapter(this, playList);
         lvPlayList.setAdapter(playListAdapter);
         lvPlayList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Media.currSongIndex = i;
+                mysong.currSongIndex = i;
                 isPlaying = true;
                 showController();
                 mysong.playAudio();
             }
         });
+
     }
 
     private void showController() {
-        Song currSong = playList.get(Media.currSongIndex);
+        Song currSong = playList.get(mysong.currSongIndex);
         playListController.setVisibility(View.VISIBLE);
         ImageView iv = playListController.findViewById(R.id.frame_artist_image);
         iv.setImageResource(currSong.getIcon());
@@ -69,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         if (mysong.isPlaying()) {
             iBtnPlay.setImageResource(R.drawable.ic_pause_black_24dp);
+            showController();
         } else {
             iBtnPlay.setImageResource(R.drawable.ic_play_arrow_black_24dp);
         }
@@ -80,14 +86,13 @@ public class MainActivity extends AppCompatActivity {
         mToast = Toast.makeText(context, msg, period);
         mToast.show();
     }
-
-    private void cacheViews() {
-        iBtnPlay = findViewById(R.id.iBtn_play);
-        lvPlayList = findViewById(R.id.main_activity_lv_songs);
-        playListController = findViewById(R.id.main_activity_controller);
+    private void setNavBar()
+    {
         Button btnSearch = findViewById(R.id.btn_search);
         Button btnLibrary = findViewById(R.id.btn_library);
         Button btnBuyOnline = findViewById(R.id.btn_buy_online);
+        Button btnHome = findViewById(R.id.btn_home);
+        btnHome.setBackgroundResource(R.color.colorAccent);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,6 +111,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, Online.class));
             }
         });
+    }
+
+    private void cacheViews() {
+        iBtnPlay = findViewById(R.id.iBtn_play);
+        lvPlayList = findViewById(R.id.main_activity_lv_songs);
+        playListController = findViewById(R.id.main_activity_controller);
         iBtnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,5 +176,101 @@ public class MainActivity extends AppCompatActivity {
                 "Mushary Al Afasy", "this is a song published at 2017", "Al-kareaa", ++id));
     }
 
+    public class Media {
+        private AudioManager audioManager;
+        private MediaPlayer mediaPlayer = null;
+        public  int currSongIndex =0;
+        private AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+            @Override
+            public void onAudioFocusChange(int i) {
+                switch (i) {
+                    case AudioManager.AUDIOFOCUS_REQUEST_GRANTED:
+                        mediaPlayer.start();
+                        break;
+                    case AudioManager.AUDIOFOCUS_LOSS:
+                        mediaPlayer.stop();
+                        releaseAudio();
+                        break;
+                    case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                        mediaPlayer.pause();
+                        break;
+                    case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK:
+                        mediaPlayer.pause();
+                        break;
+                }
+            }
+        };
+
+        public void releaseAudio() {
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+        }
+
+        public Media() {
+        }
+
+        public boolean isNull() {
+            if (mediaPlayer == null)
+                return true;
+            return false;
+        }
+
+        public boolean isPlaying() {
+            if (mediaPlayer != null)
+                return mediaPlayer.isPlaying();
+            return false;
+        }
+
+        public void pause() {
+            if (mediaPlayer != null)
+                mediaPlayer.pause();
+        }
+
+        public void start() {
+            if (mediaPlayer != null)
+                mediaPlayer.start();
+        }
+
+        public void playPrev() {
+            if (mediaPlayer != null) {
+                if (currSongIndex > 0)
+                    currSongIndex--;
+                else Toast.makeText(getApplicationContext(),
+                        getResources().getString(R.string.first), Toast.LENGTH_SHORT).show();
+                playAudio();
+            }
+        }
+
+        public void playAudio() {
+            releaseAudio();
+            audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            int result = audioManager.requestAudioFocus(audioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_REQUEST_GRANTED);
+            if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), MainActivity.playList.get(currSongIndex).getSongResource());
+                mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        releaseAudio();
+                    }
+                });
+            }
+        }
+
+        public void playNext() {
+            if (mediaPlayer != null) {
+                if (currSongIndex < MainActivity.playList.size() - 1)
+                    currSongIndex++;
+                else {
+                    currSongIndex = 0;
+                    Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.first), Toast.LENGTH_SHORT).show();
+                }
+                playAudio();
+            }
+        }
+    }
 
 }

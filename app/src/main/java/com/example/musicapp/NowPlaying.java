@@ -17,8 +17,6 @@ public class NowPlaying extends AppCompatActivity {
     private ImageView artistImage;
     private TextView tvAlbumTitle;
     private TextView tvSongTitle;
-    private ImageButton download;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,19 +28,16 @@ public class NowPlaying extends AppCompatActivity {
         setListeners();
 
         if (!MainActivity.mysong.isNull()) {
-            if (MainActivity.mysong.isPlaying()) {
-                iBtnPlay.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
-            }
-            download.setVisibility(View.INVISIBLE);
-            artistImage.setImageResource(MainActivity.playList.get(Media.currSongIndex).getIcon());
-            tvSongTitle.setText(MainActivity.playList.get(Media.currSongIndex).getSongTitle());
+
+            artistImage.setImageResource(MainActivity.playList.get(MainActivity.mysong.currSongIndex).getIcon());
+            tvSongTitle.setText(MainActivity.playList.get(MainActivity.mysong.currSongIndex).getSongTitle());
             //TODO change the function below to get Album
-            tvAlbumTitle.setText(MainActivity.playList.get(Media.currSongIndex).getArtistName());
+            iBtnPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
+            tvAlbumTitle.setText(MainActivity.playList.get(MainActivity.mysong.currSongIndex).getArtistName());
         }
     }
 
     private void cacheViews() {
-        download = findViewById(R.id.download_song);
         iBtnNext = findViewById(R.id.iBtn_next);
         iBtnPlay = findViewById(R.id.iBtn_play);
         iBtnPrev = findViewById(R.id.iBtn_previous);
@@ -52,7 +47,7 @@ public class NowPlaying extends AppCompatActivity {
     }
 
     private void updateScreen() {
-        Song currSong = MainActivity.playList.get(Media.currSongIndex);
+        Song currSong = MainActivity.playList.get(MainActivity.mysong.currSongIndex);
         tvAlbumTitle.setText(currSong.getArtistName());
         tvSongTitle.setText(currSong.getSongTitle());
         artistImage.setImageResource(currSong.getIcon());
@@ -60,6 +55,19 @@ public class NowPlaying extends AppCompatActivity {
             iBtnPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
         else
             iBtnPlay.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(MainActivity.mysong.isPlaying())
+        {
+            iBtnPlay.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
+        }
+        else
+        {
+            iBtnPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
+        }
     }
 
     private void setListeners() {
@@ -95,11 +103,6 @@ public class NowPlaying extends AppCompatActivity {
                 updateScreen();
             }
         });
-        download.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.showToast(NowPlaying.this, "Succeeded", Toast.LENGTH_SHORT);
-            }
-        });
+
     }
 }

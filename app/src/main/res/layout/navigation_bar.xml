@@ -7,13 +7,35 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_marginTop="1dp"
+        android:layout_weight="1"
+        android:background="@color/backgroundDark">
+
+        <Button
+            android:id="@+id/btn_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/home"
+            android:textColor="@android:color/white" />
+    </FrameLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/listBackground" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="1dp"
         android:layout_weight="1"
         android:background="@color/backgroundDark">
 
         <Button
             android:id="@+id/btn_search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="?android:attr/selectableItemBackground"
             android:text="@string/search"
             android:textColor="@android:color/white" />
@@ -27,13 +49,14 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_marginTop="1dp"
         android:layout_weight="1"
         android:background="@color/backgroundDark">
 
         <Button
             android:id="@+id/btn_library"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="?android:attr/selectableItemBackground"
             android:text="@string/library"
             android:textColor="@android:color/white" />
@@ -44,16 +67,18 @@
         android:layout_height="match_parent"
         android:background="@color/listBackground" />
 
+
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_marginTop="1dp"
         android:layout_weight="1"
         android:background="@color/backgroundDark">
 
         <Button
             android:id="@+id/btn_buy_online"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="?android:attr/selectableItemBackground"
             android:text="@string/online"
             android:textColor="@android:color/white" />

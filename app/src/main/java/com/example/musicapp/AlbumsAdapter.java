@@ -20,7 +20,6 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumHolde
         void OnClickItem();
     }
 
-
     public AlbumsAdapter(Context context, ArrayList<Album> albumList) {
         onClickItem = (OnClickItemListener) context;
         this.albumList = albumList;

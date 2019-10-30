@@ -20,6 +20,7 @@ public class SongItemAdapter extends ArrayAdapter<Song> {
     private TextView songTitle;
     private TextView songArtist;
     private ImageButton download;
+
     public SongItemAdapter(@NonNull Context context, @NonNull List<Song> objects) {
         super(context, 0, objects);
     }

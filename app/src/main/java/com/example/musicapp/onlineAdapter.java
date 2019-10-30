@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class onlineAdapter extends RecyclerView.Adapter<onlineAdapter.SongHolder> {
     ArrayList<Song> songList;
@@ -31,19 +30,14 @@ public class onlineAdapter extends RecyclerView.Adapter<onlineAdapter.SongHolder
 
     @NonNull
     @Override
-    public SongHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public onlineAdapter.SongHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.songs_list_item, parent, false);
         return new SongHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SongHolder holder, int position, @NonNull List<Object> payloads) {
+    public void onBindViewHolder(@NonNull onlineAdapter.SongHolder holder, int position) {
         holder.bind(position);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull SongHolder holder, int position) {
-
     }
 
     public class SongHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -52,11 +46,9 @@ public class onlineAdapter extends RecyclerView.Adapter<onlineAdapter.SongHolder
         private ImageView songIcon;
         private ImageButton download;
 
-        private int position;
-
         @Override
         public void onClick(View view) {
-            clickHandler.OnClickItem(position);
+            clickHandler.OnClickItem(getAdapterPosition());
         }
 
         public SongHolder(@NonNull View itemView) {
@@ -65,12 +57,9 @@ public class onlineAdapter extends RecyclerView.Adapter<onlineAdapter.SongHolder
             songIcon = itemView.findViewById(R.id.song_icon);
             artistName = itemView.findViewById(R.id.artist_name);
             download = itemView.findViewById(R.id.download_song);
-
-
         }
 
         public void bind(final int index) {
-            position = index;
             final Song song = songList.get(index);
             songName.setText(song.getSongTitle());
             artistName.setText(song.getArtistName());

@@ -20,7 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tool_bar"
-        android:background="@color/listBackground" />
+        android:background="@color/listBackground"
+        android:layout_above="@id/nav_bar"/>
 
     <TextView
         android:id="@+id/tv_not_found"
@@ -33,5 +34,10 @@
         android:textAppearance="?android:attr/textAppearanceSearchResultTitle"
         android:textColor="@android:color/white"
         android:visibility="gone" />
-
+    <include
+        layout="@layout/navigation_bar"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:id="@+id/nav_bar"/>
 </RelativeLayout>

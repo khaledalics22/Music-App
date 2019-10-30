@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 
@@ -27,6 +26,7 @@ public class Search extends AppCompatActivity {
 
         tvNotFound = findViewById(R.id.not_found);
         searchView = findViewById(R.id.search_view);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -39,6 +39,9 @@ public class Search extends AppCompatActivity {
                 return false;
             }
         });
+        /*
+            I had to use ListView because it was required otherwise i would use recycler view
+         */
         final ListView listView = findViewById(R.id.search_lv);
         foundSongs = new ArrayList<Song>();
         songItemAdapter = new SongItemAdapter(this, foundSongs);
@@ -46,7 +49,7 @@ public class Search extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Media.currSongIndex = foundSongs.get(i).getId();
+                MainActivity.mysong.currSongIndex = foundSongs.get(i).getId();
                 MainActivity.mysong.playAudio();
                 startActivity(new Intent(Search.this, NowPlaying.class));
             }
@@ -55,6 +58,33 @@ public class Search extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 searchView.setIconified(true);
+            }
+        });
+        setNavBar();
+    }
+
+    private void setNavBar() {
+        Button btnSearch = findViewById(R.id.btn_search);
+        Button btnAlbum = findViewById(R.id.btn_library);
+        Button btnBuyOnline = findViewById(R.id.btn_buy_online);
+        Button btnHome = findViewById(R.id.btn_home);
+        btnSearch.setBackgroundResource(R.color.colorAccent);
+        btnBuyOnline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Search.this, Online.class));
+            }
+        });
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Search.this, MainActivity.class));
+            }
+        });
+        btnAlbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Search.this, AlbumsActivity.class));
             }
         });
     }

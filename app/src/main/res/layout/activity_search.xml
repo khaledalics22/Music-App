@@ -12,6 +12,7 @@
         android:id="@+id/search_lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/nav_bar"
         android:layout_below="@id/search_layout" />
 
     <TextView
@@ -23,4 +24,10 @@
         android:layout_marginTop="@dimen/height_medium"
         android:textAppearance="?android:attr/textAppearanceSearchResultTitle"
         android:visibility="gone" />
+    <include
+        layout="@layout/navigation_bar"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:id="@+id/nav_bar"/>
 </RelativeLayout>
