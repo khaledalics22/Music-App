@@ -23,8 +23,8 @@ public class onlineAdapter extends RecyclerView.Adapter<onlineAdapter.SongHolder
         void downloadSong(int position);
     }
 
-    public onlineAdapter(Context context, ArrayList<Song> songList) {
-        clickHandler = (OnClickItemListener) context;
+    public onlineAdapter(OnClickItemListener listener, ArrayList<Song> songList) {
+        clickHandler = listener;
         this.songList = songList;
     }
 
@@ -49,6 +49,7 @@ public class onlineAdapter extends RecyclerView.Adapter<onlineAdapter.SongHolder
         @Override
         public void onClick(View view) {
             clickHandler.OnClickItem(getAdapterPosition());
+
         }
 
         public SongHolder(@NonNull View itemView) {
@@ -57,6 +58,7 @@ public class onlineAdapter extends RecyclerView.Adapter<onlineAdapter.SongHolder
             songIcon = itemView.findViewById(R.id.song_icon);
             artistName = itemView.findViewById(R.id.artist_name);
             download = itemView.findViewById(R.id.download_song);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(final int index) {

@@ -32,8 +32,8 @@ public class AlbumsActivity extends AppCompatActivity implements AlbumsAdapter.O
     }
 
     @Override
-    public void OnClickItem() {
-        MainActivity.showToast(this, getString(R.string.album), Toast.LENGTH_SHORT);
+    public void OnClickItem(int position) {
+        MainActivity.showToast(this, getString(R.string.album,albumList.get(position).getAlbumName()), Toast.LENGTH_SHORT);
     }
 
     private void setNavBar() {

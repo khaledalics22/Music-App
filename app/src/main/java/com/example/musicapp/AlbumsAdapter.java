@@ -17,11 +17,11 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumHolde
     OnClickItemListener onClickItem;
 
     public interface OnClickItemListener {
-        void OnClickItem();
+        void OnClickItem(int position);
     }
 
-    public AlbumsAdapter(Context context, ArrayList<Album> albumList) {
-        onClickItem = (OnClickItemListener) context;
+    public AlbumsAdapter(OnClickItemListener listener, ArrayList<Album> albumList) {
+        onClickItem = listener;
         this.albumList = albumList;
     }
 
@@ -45,7 +45,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumHolde
 
         @Override
         public void onClick(View view) {
-            onClickItem.OnClickItem();
+            onClickItem.OnClickItem(getAdapterPosition());
         }
 
         public AlbumHolder(@NonNull View itemView) {
@@ -53,6 +53,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumHolde
             albumName = itemView.findViewById(R.id.album_name);
             artistName = itemView.findViewById(R.id.artist_name);
             albumImage = itemView.findViewById(R.id.album_image);
+            itemView.setOnClickListener(this);
 
         }
 

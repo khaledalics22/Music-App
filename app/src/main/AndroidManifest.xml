@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".AlbumsActivity"
-            android:label="@string/album" />
+            android:label="@string/albums" />
         <activity
             android:name=".Online"
             android:label="@string/online"
