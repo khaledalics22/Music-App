@@ -135,6 +135,7 @@ public class Online extends AppCompatActivity implements onlineAdapter.OnClickIt
              suppose to  search online
              this code is just for checking
          */
+        if(foundSongs.size()>0)onlineList.clear();
         onlineList.addAll(foundSongs);
         foundSongs.clear();
         foundSongs.addAll(onlineList);
