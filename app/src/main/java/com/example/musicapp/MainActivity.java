@@ -22,21 +22,25 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private ImageButton iBtnPlay;
     private ListView lvPlayList;
-    public static ArrayList<Song> playList;
     private RelativeLayout playListController;
+    public static ArrayList<Song> playList;
     public static Toast mToast;
-    public static Media mysong;
+    public static Media mySong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setNavBar();
-        cacheViews();
+        initViews();
+        /*
+           check if playlist was not loaded
+           else just show current song at controller
+        */
         if (playList == null) {
             playList = new ArrayList<Song>();
             loadSongs();
-            mysong = new Media();
+            mySong = new Media();
         } else {
             showController();
         }
@@ -45,17 +49,23 @@ public class MainActivity extends AppCompatActivity {
         lvPlayList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mysong.currSongIndex = i;
-                isPlaying = true;
+                mySong.currSongIndex = i;
                 showController();
-                mysong.playAudio();
+                mySong.playAudio();
             }
         });
 
     }
 
+    /*
+      Name: showController
+      parameters: None
+      function : initialize view of controller and update
+      their data with current song's data.
+      return : void
+   */
     private void showController() {
-        Song currSong = playList.get(mysong.currSongIndex);
+        Song currSong = playList.get(mySong.currSongIndex);
         playListController.setVisibility(View.VISIBLE);
         ImageView iv = playListController.findViewById(R.id.frame_artist_image);
         iv.setImageResource(currSong.getIcon());
@@ -71,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (mysong.isPlaying()) {
+        if (mySong.isPlaying()) {
             iBtnPlay.setImageResource(R.drawable.ic_pause_black_24dp);
             showController();
         } else {
@@ -79,6 +89,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
+          Name: show toast
+          parameters: context (of the current activity)
+                        , msg (message wanted to be displayed
+                        , period (of toast)
+          function : displays toasts properly
+          return : void
+       */
     public static void showToast(Context context, String msg, int period) {
         if (mToast != null)
             mToast.cancel();
@@ -86,6 +104,12 @@ public class MainActivity extends AppCompatActivity {
         mToast.show();
     }
 
+    /*
+          Name: setNavBar
+          parameters: None
+          function : initialize all Buttons of the navigation bar and its listeners
+          return : void
+       */
     private void setNavBar() {
         Button btnSearch = findViewById(R.id.btn_search);
         Button btnLibrary = findViewById(R.id.btn_library);
@@ -112,22 +136,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void cacheViews() {
+    /*
+          Name: initViews
+          parameters: None
+          function : Initializing views and listeners
+          return : void
+       */
+    private void initViews() {
         iBtnPlay = findViewById(R.id.iBtn_play);
         lvPlayList = findViewById(R.id.main_activity_lv_songs);
         playListController = findViewById(R.id.main_activity_controller);
         iBtnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isPlaying) {
+                if (!mySong.isPlaying()) {
                     iBtnPlay.setImageResource(R.drawable.ic_pause_black_24dp);
-                    isPlaying = true;
-                    mysong.start();
+                    mySong.start();
                     showToast(MainActivity.this, getString(R.string.playing), Toast.LENGTH_SHORT);
                 } else {
                     iBtnPlay.setImageResource(R.drawable.ic_play_arrow_black_24dp);
-                    isPlaying = false;
-                    mysong.pause();
+                    mySong.pause();
                     showToast(MainActivity.this, getString(R.string.paused), Toast.LENGTH_SHORT);
                 }
             }
@@ -141,10 +169,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-    this variable is used temporarily to indicate if the song is played or paused
-     */
-    public static boolean isPlaying = false;
-
+      class: Media
+      function : creates media player and handle all media functions
+   */
     public class Media {
         private AudioManager audioManager;
         private MediaPlayer mediaPlayer = null;
@@ -212,6 +239,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        /*
+                create media player and start it
+         */
         public void playAudio() {
             releaseAudio();
             audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -219,6 +249,12 @@ public class MainActivity extends AppCompatActivity {
             if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), MainActivity.playList.get(currSongIndex).getSongResource());
                 mediaPlayer.start();
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        playNext();
+                    }
+                });
             }
         }
 
@@ -226,6 +262,7 @@ public class MainActivity extends AppCompatActivity {
             return mediaPlayer;
         }
 
+        // play next audio
         public void playNext() {
             if (mediaPlayer != null) {
                 if (currSongIndex < MainActivity.playList.size() - 1)
@@ -249,22 +286,31 @@ public class MainActivity extends AppCompatActivity {
         i want it to still plays when the app is invisible
          */
     }
-    static public void addSong(Song song){
-        if(playList!=null)
+
+    /*
+    add a song to the list.
+    can be accessed from other activities
+     */
+    static public void addSong(Song song) {
+        if (playList != null)
             playList.add(song);
     }
+
     private void loadSongs() {
         /*
-         here we are supposed to load the media files from device
-         and add data to playlist ArrayList
+         this method is supposed to load the audio files from device
+         and add them to playlist ArrayList.
+         hard code is just for check case, and there won't be any for real loading
          */
         int id = 0;
         playList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
-                "Dragons", "this is a song published at 2017", "believer", id, "believer"));
+                "Dragons", "this is a song published at 2017", "believer", id,
+                "believer"));
         playList.add(new Song(R.raw.alekhlas, R.mipmap.ic_launcher,
                 "Mushary Al Afasy", "this is a song published at 2017", "Al-Ekhlas", ++id));
         playList.add(new Song(R.raw.youcametome, R.mipmap.ic_launcher,
-                "Samy Youssef", "this is a song published at 2017", "you came to me", ++id, "you came to me"));
+                "Samy Youssef", "this is a song published at 2017", "you came to me", ++id,
+                "you came to me"));
         playList.add(new Song(R.raw.alhumaza, R.mipmap.ic_launcher,
                 "Mushary Al Afasy", "this is a song published at 2017", "Al-Hummaza", ++id));
         playList.add(new Song(R.raw.alkaferoon, R.mipmap.ic_launcher,
@@ -273,14 +319,7 @@ public class MainActivity extends AppCompatActivity {
                 "Unknown", "this is a song published at 2017", "love the way you are", ++id));
         playList.add(new Song(R.raw.almaaon, R.mipmap.ic_launcher,
                 "Mushary Al Afasy", "this is a song published at 2017", "Al-Maaon", ++id));
-        playList.add(new Song(R.raw.almasad, R.mipmap.ic_launcher,
-                "Mushary Al Afasy", "this is a song published at 2017", "Al-masad", ++id));
-        playList.add(new Song(R.raw.alnasr, R.mipmap.ic_launcher,
-                "Mushary Al Afasy", "this is a song published at 2017", "Al-Nasr", ++id));
-        playList.add(new Song(R.raw.altakathur, R.mipmap.ic_launcher,
-                "Mushary Al Afasy", "this is a song published at 2017", "Al-Takathur", ++id));
-        playList.add(new Song(R.raw.kareaa, R.mipmap.ic_launcher,
-                "Mushary Al Afasy", "this is a song published at 2017", "Al-kareaa", ++id));
+
     }
 
 }

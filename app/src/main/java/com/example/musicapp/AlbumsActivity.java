@@ -17,25 +17,52 @@ public class AlbumsActivity extends AppCompatActivity implements AlbumsAdapter.O
     private ArrayList<Album> albumList;
     private RecyclerView albums;
     private RecyclerView.LayoutManager layoutManager;
-    AlbumsAdapter albumsAdapter;
+    private AlbumsAdapter albumsAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_albums);
+        initViews();
         loadAlbums();
-        albums = findViewById(R.id.rv_albums);
+        /*
+               initializing vertical recycler view with 2 columns
+         */
         layoutManager = new GridLayoutManager(this, 2);
         albums.setLayoutManager(layoutManager);
-         albumsAdapter = new AlbumsAdapter(this, albumList);
+        albumsAdapter = new AlbumsAdapter(this, albumList);
         albums.setAdapter(albumsAdapter);
+        /*
+            initializing navigation bar
+         */
         setNavBar();
+    }
+
+    /*
+        Name: initViews
+        parameters: None
+        function : Initializing views
+        return : void
+     */
+    private void initViews() {
+        albums = findViewById(R.id.rv_albums);
     }
 
     @Override
     public void OnClickItem(int position) {
-        MainActivity.showToast(this, getString(R.string.album, albumList.get(position).getAlbumName()), Toast.LENGTH_SHORT);
+        /*
+            this method is supposed to open Songs of a certain album
+         */
+        MainActivity.showToast(this, getString(R.string.open) +
+                getString(R.string.album, albumList.get(position).getAlbumName()), Toast.LENGTH_SHORT);
     }
 
+    /*
+       Name: setNabBar
+       parameters: None
+       function : Initializing Navigation Bar and sets its listeners
+       return : void
+    */
     private void setNavBar() {
         Button btnSearch = findViewById(R.id.btn_search);
         Button btnAlbum = findViewById(R.id.btn_library);
@@ -61,31 +88,27 @@ public class AlbumsActivity extends AppCompatActivity implements AlbumsAdapter.O
             }
         });
     }
-
+    /*
+           Name: loadAlbums
+           parameters: None
+           function : load offline Albums
+           return : void
+        */
     private void loadAlbums() {
+        /*
+             this is just for checking
+             strings are just for checking, there will not be any hard string when real loading
+         */
         albumList = new ArrayList<Album>();
         albumList.add(new Album(MainActivity.playList,
-                "me before you",  "khaled", R.drawable.ic_launcher_background));
+                "me before you", "khaled", R.drawable.ic_launcher_background));
         albumList.add(new Album(MainActivity.playList,
-                "me before you",  "khaled", R.drawable.ic_launcher_background));
+                "me before you", "khaled", R.drawable.ic_launcher_background));
         albumList.add(new Album(MainActivity.playList,
-                "me before you",  "khaled", R.drawable.ic_launcher_background));
+                "me before you", "khaled", R.drawable.ic_launcher_background));
         albumList.add(new Album(MainActivity.playList,
-                "me before you",  "khaled", R.drawable.ic_launcher_background));
+                "me before you", "khaled", R.drawable.ic_launcher_background));
         albumList.add(new Album(MainActivity.playList,
-                "me before you",  "khaled", R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList,
-                "me before you",  "khaled", R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList,
-                "me before you",  "khaled", R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList,
-                "me before you",  "khaled", R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList,
-                "me before you",  "khaled", R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList,
-                "me before you",  "khaled", R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList,
-                "me before you",  "khaled", R.drawable.ic_launcher_background));
-
+                "me before you", "khaled", R.drawable.ic_launcher_background));
     }
 }

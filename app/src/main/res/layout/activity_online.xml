@@ -8,9 +8,9 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tool_bar"
-        android:background="@color/backgroundDark"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize">
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/backgroundDark">
 
         <include layout="@layout/search_toolbar" />
     </androidx.appcompat.widget.Toolbar>
@@ -19,9 +19,9 @@
         android:id="@+id/online_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/nav_bar"
         android:layout_below="@id/tool_bar"
-        android:background="@color/listBackground"
-        android:layout_above="@id/nav_bar"/>
+        android:background="@color/listBackground" />
 
     <TextView
         android:id="@+id/tv_not_found"
@@ -34,10 +34,11 @@
         android:textAppearance="?android:attr/textAppearanceSearchResultTitle"
         android:textColor="@android:color/white"
         android:visibility="gone" />
+
     <include
+        android:id="@+id/nav_bar"
         layout="@layout/navigation_bar"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:id="@+id/nav_bar"/>
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>

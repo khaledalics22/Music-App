@@ -49,8 +49,8 @@ public class Search extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                MainActivity.mysong.currSongIndex = foundSongs.get(i).getId();
-                MainActivity.mysong.playAudio();
+                MainActivity.mySong.currSongIndex = foundSongs.get(i).getId();
+                MainActivity.mySong.playAudio();
                 startActivity(new Intent(Search.this, NowPlaying.class));
             }
         });
@@ -62,7 +62,12 @@ public class Search extends AppCompatActivity {
         });
         setNavBar();
     }
-
+    /*
+               Name: setNavBar
+               parameters: None
+               function : initialize all Buttons of the navigation bar and its listeners
+               return : void
+            */
     private void setNavBar() {
         Button btnSearch = findViewById(R.id.btn_search);
         Button btnAlbum = findViewById(R.id.btn_library);
@@ -88,7 +93,12 @@ public class Search extends AppCompatActivity {
             }
         });
     }
-
+    /*
+               Name: searchForSong
+               parameters: string songName (name of wanted song )
+               function : searches for a song in the offline list(on device)
+               return : void
+            */
     private void searchForSong(String songName) {
         foundSongs.clear();
         for (int i = 0; i < MainActivity.playList.size(); i++) {

@@ -1,6 +1,5 @@
 package com.example.musicapp;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumHolder> {
     private ArrayList<Album> albumList;
     OnClickItemListener onClickItem;
+
 
     public interface OnClickItemListener {
         void OnClickItem(int position);

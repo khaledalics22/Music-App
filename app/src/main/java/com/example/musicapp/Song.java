@@ -28,14 +28,6 @@ public class Song {
         Id = id;
     }
 
-    public void setSongResource(int songResource) {
-        this.songResource = songResource;
-    }
-
-    public void setAlbumName(String albumName) {
-        this.albumName = albumName;
-    }
-
     public void setId(int id) {
         Id = id;
     }
@@ -49,6 +41,12 @@ public class Song {
         this.Id = Id;
     }
 
+    /*
+    All getters and setters will be added when connecting to network.
+    For now,
+    some getters and setters are not used so no need
+    to write them at the moment
+     */
     public int getId() {
         return Id;
     }
@@ -63,39 +61,11 @@ public class Song {
         return "";
     }
 
-    public void setSongTitle(String songTitle) {
-        this.songTitle = songTitle;
-    }
-
-    public String getSongPath() {
-        return songPath;
-    }
-
     public int getIcon() {
         return icon;
     }
 
     public String getArtistName() {
         return artistName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setSongPath(String songPath) {
-        this.songPath = songPath;
-    }
-
-    public void setIcon(int icon) {
-        this.icon = icon;
-    }
-
-    public void setArtistName(String artistName) {
-        this.artistName = artistName;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

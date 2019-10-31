@@ -33,7 +33,7 @@ public class Online extends AppCompatActivity implements onlineAdapter.OnClickIt
         Toolbar toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        attachViews();
+        initViews();
         loadOnlineFiles();
         setNavBar();
         /*
@@ -45,7 +45,12 @@ public class Online extends AppCompatActivity implements onlineAdapter.OnClickIt
         onlineRecycler.setAdapter(adapter);
         foundSongs = new ArrayList<>();
     }
-
+    /*
+             Name: setNavBar
+             parameters: None
+             function : initialize all Buttons of the navigation bar and its listeners
+             return : void
+          */
     private void setNavBar() {
         Button btnSearch = findViewById(R.id.btn_search);
         Button btnAlbum = findViewById(R.id.btn_library);
@@ -81,20 +86,32 @@ public class Online extends AppCompatActivity implements onlineAdapter.OnClickIt
         MainActivity.showToast(this, getString(R.string.not_available_offline), Toast.LENGTH_SHORT);
     }
 
+    /*
+         Name: downloadSong
+         parameters: int position (of song in online list)
+         function : 1-downloads the chosen song and add it to the offline list
+                    2-remove it from online list
+                    3-and updates the list displayed
+         return : void
+      */
     @Override
     public void downloadSong(int position) {
             /*
-                this is supposed to download song online
+                this is supposed to download songs to be available offline
              */
-
         MainActivity.addSong(onlineList.get(position));  // add it to my offline list
         onlineList.remove(position);
         adapter.notifyItemRemoved(position);
         adapter.notifyItemRangeChanged(position, onlineList.size());
         MainActivity.showToast(this, getString(R.string.succeeded), Toast.LENGTH_SHORT);
     }
-
-    private void attachViews() {
+    /*
+             Name: initViews
+             parameters: None
+             function : initialize Views of activity and listeners
+             return : void
+          */
+    private void initViews() {
         onlineRecycler = findViewById(R.id.online_recycler);
         searchView = findViewById(R.id.search_view);
         tvNotFound = findViewById(R.id.tv_not_found);
@@ -130,6 +147,12 @@ public class Online extends AppCompatActivity implements onlineAdapter.OnClickIt
         });
     }
 
+    /*
+         Name: searchForSongOnline
+         parameters: songName (name of song )
+         function : searches for song online and show it
+         return : void
+      */
     private void searchForSongOnline(String songName) {
         /*
              suppose to  search online
@@ -140,7 +163,7 @@ public class Online extends AppCompatActivity implements onlineAdapter.OnClickIt
         foundSongs.clear();
         foundSongs.addAll(onlineList);
         for (int i = 0; i < onlineList.size(); i++) {
-            if (searchView.getQuery().length()> 0 &&!onlineList.get(i).getSongTitle().contains(songName)) {
+            if (searchView.getQuery().length()> 0 &&!onlineList.get(i).getSongTitle().contains(songName)) {  //check if query is not empty and song is available
                 onlineList.remove(onlineList.get(i));
                 i--;
             }
@@ -152,7 +175,12 @@ public class Online extends AppCompatActivity implements onlineAdapter.OnClickIt
             tvNotFound.setVisibility(View.INVISIBLE);
         }
     }
-
+    /*
+             Name: loadOnlineFiles
+             parameters: None
+             function : load audio files to show it
+             return : void
+          */
     private void loadOnlineFiles() {
 
         /*
@@ -163,31 +191,20 @@ public class Online extends AppCompatActivity implements onlineAdapter.OnClickIt
          */
         onlineList = new ArrayList<Song>();
         int id = 0;
-        onlineList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
-                "Unknown", "this is a song published at 2017", "believer", id));
-        onlineList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
+          onlineList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
                 "Unknown", "this is a song published at 2017", "catch", ++id));
         onlineList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
                 "Unknown", "this is a song published at 2017", "believer", ++id));
         onlineList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
                 "Unknown", "this is a song published at 2017", "so on", ++id));
-        onlineList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
-                "Unknown", "this is a song published at 2017", "believer", ++id));
-        onlineList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
+           onlineList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
                 "Unknown", "this is a song published at 2017", "try", ++id));
         onlineList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
                 "Unknown", "this is a song published at 2017", "match", ++id));
         onlineList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
-                "Unknown", "this is a song published at 2017", "believer", ++id));
-        onlineList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
-                "Unknown", "this is a song published at 2017", "believer", ++id));
-        onlineList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
                 "Unknown", "this is a song published at 2017", "play", ++id));
         onlineList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
                 "Unknown", "this is a song published at 2017", "found", ++id));
-        onlineList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
-                "Unknown", "this is a song published at 2017", "believer", ++id));
-
     }
 }
 

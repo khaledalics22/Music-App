@@ -25,9 +25,7 @@
     <string name="home">Home</string>
     <string name="not_available_offline">not available offline</string>
     <string name="albums">Albums</string>
-
-
-
+    <string name="open">Open</string>
 
 
 </resources>

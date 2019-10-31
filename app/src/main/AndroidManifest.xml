@@ -22,7 +22,7 @@
         <activity
             android:name=".NowPlaying"
             android:label="@string/now_playing"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/home">
