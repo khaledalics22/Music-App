@@ -225,6 +225,12 @@ public class MainActivity extends AppCompatActivity {
                         playNext();
                     }
                 });
+                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mediaPlayer) {
+
+                    }
+                });
             }
         }
 
