@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundDark"
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -11,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/nav_bar"
+        android:background="@color/backgroundDark"
         android:padding="7dp" />
     <include
         layout="@layout/navigation_bar"

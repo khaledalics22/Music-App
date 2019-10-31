@@ -255,6 +255,10 @@ public class MainActivity extends AppCompatActivity {
         i want it to still plays when the app is invisible
          */
     }
+    static public void addSong(Song song){
+        if(playList!=null)
+            playList.add(song);
+    }
     private void loadSongs() {
         /*
          here we are supposed to load the media files from device

@@ -17,7 +17,7 @@ public class AlbumsActivity extends AppCompatActivity implements AlbumsAdapter.O
     private ArrayList<Album> albumList;
     private RecyclerView albums;
     private RecyclerView.LayoutManager layoutManager;
-
+    AlbumsAdapter albumsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,14 +26,14 @@ public class AlbumsActivity extends AppCompatActivity implements AlbumsAdapter.O
         albums = findViewById(R.id.rv_albums);
         layoutManager = new GridLayoutManager(this, 2);
         albums.setLayoutManager(layoutManager);
-        AlbumsAdapter albumsAdapter = new AlbumsAdapter(this, albumList);
+         albumsAdapter = new AlbumsAdapter(this, albumList);
         albums.setAdapter(albumsAdapter);
         setNavBar();
     }
 
     @Override
     public void OnClickItem(int position) {
-        MainActivity.showToast(this, getString(R.string.album,albumList.get(position).getAlbumName()), Toast.LENGTH_SHORT);
+        MainActivity.showToast(this, getString(R.string.album, albumList.get(position).getAlbumName()), Toast.LENGTH_SHORT);
     }
 
     private void setNavBar() {
@@ -64,31 +64,28 @@ public class AlbumsActivity extends AppCompatActivity implements AlbumsAdapter.O
 
     private void loadAlbums() {
         albumList = new ArrayList<Album>();
-        albumList.add(new Album(MainActivity.playList, getString(R.string.album,
-                "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList, getString(R.string.album,
-                "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList, getString(R.string.album,
-                "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList, getString(R.string.album,
-                "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList, getString(R.string.album,
-                "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList, getString(R.string.album,
-                "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList, getString(R.string.album,
-                "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList, getString(R.string.album,
-                "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList, getString(R.string.album,
-                "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList, getString(R.string.album,
-                "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList, getString(R.string.album,
-                "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList, getString(R.string.album,
-                "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
-        albumList.add(new Album(MainActivity.playList, getString(R.string.album,
-                "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
+        albumList.add(new Album(MainActivity.playList,
+                "me before you",  "khaled", R.drawable.ic_launcher_background));
+        albumList.add(new Album(MainActivity.playList,
+                "me before you",  "khaled", R.drawable.ic_launcher_background));
+        albumList.add(new Album(MainActivity.playList,
+                "me before you",  "khaled", R.drawable.ic_launcher_background));
+        albumList.add(new Album(MainActivity.playList,
+                "me before you",  "khaled", R.drawable.ic_launcher_background));
+        albumList.add(new Album(MainActivity.playList,
+                "me before you",  "khaled", R.drawable.ic_launcher_background));
+        albumList.add(new Album(MainActivity.playList,
+                "me before you",  "khaled", R.drawable.ic_launcher_background));
+        albumList.add(new Album(MainActivity.playList,
+                "me before you",  "khaled", R.drawable.ic_launcher_background));
+        albumList.add(new Album(MainActivity.playList,
+                "me before you",  "khaled", R.drawable.ic_launcher_background));
+        albumList.add(new Album(MainActivity.playList,
+                "me before you",  "khaled", R.drawable.ic_launcher_background));
+        albumList.add(new Album(MainActivity.playList,
+                "me before you",  "khaled", R.drawable.ic_launcher_background));
+        albumList.add(new Album(MainActivity.playList,
+                "me before you",  "khaled", R.drawable.ic_launcher_background));
+
     }
 }

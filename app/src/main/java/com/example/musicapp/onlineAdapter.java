@@ -49,7 +49,6 @@ public class onlineAdapter extends RecyclerView.Adapter<onlineAdapter.SongHolder
         @Override
         public void onClick(View view) {
             clickHandler.OnClickItem(getAdapterPosition());
-
         }
 
         public SongHolder(@NonNull View itemView) {
