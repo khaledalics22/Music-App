@@ -87,13 +87,10 @@ public class Online extends AppCompatActivity implements onlineAdapter.OnClickIt
                 this is supposed to download song online
              */
 
-            MainActivity.addSong(onlineList.get(position));  // add it to my offline list
-        adapter.notifyItemRemoved(position);
+        MainActivity.addSong(onlineList.get(position));  // add it to my offline list
         onlineList.remove(position);
-        try {
-            adapter.wait(200);
-        }catch (Exception e){}
-        adapter.notifyDataSetChanged();
+        adapter.notifyItemRemoved(position);
+        adapter.notifyItemRangeChanged(position, onlineList.size());
         MainActivity.showToast(this, getString(R.string.succeeded), Toast.LENGTH_SHORT);
     }
 
