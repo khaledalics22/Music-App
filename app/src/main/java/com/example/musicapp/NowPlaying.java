@@ -21,7 +21,6 @@ public class NowPlaying extends AppCompatActivity {
     private TextView tvSongTitle;
     private TextView tvArtistName;
 
-    private MediaPlayer mp;
     private SeekBar seekBar;
     private Handler handler;
 
@@ -36,8 +35,8 @@ public class NowPlaying extends AppCompatActivity {
         setListeners();
         handler = new Handler();
 
-        mp = MainActivity.mysong.getMediaPlayer();
-        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+        MainActivity.mysong.getMediaPlayer().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 MainActivity.mysong.playNext();
@@ -50,7 +49,7 @@ public class NowPlaying extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
               if(b)
-                mp.seekTo(i);
+                  MainActivity.mysong.getMediaPlayer().seekTo(i);
             }
 
             @Override
@@ -73,17 +72,15 @@ public class NowPlaying extends AppCompatActivity {
     }
     private void showSeekBar()
     {
-        mp = MainActivity.mysong.getMediaPlayer();
-        if(mp==null)return ; 
-        int duration =mp.getDuration();
+        int duration =MainActivity.mysong.getMediaPlayer().getDuration();
         //Make sure you update Seekbar on UI thread
         seekBar.setMax(duration);
         this.runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
-                if (mp.isPlaying()) {
-                    int mCurrentPosition = mp.getCurrentPosition();
+                if (MainActivity.mysong.isPlaying()) {
+                    int mCurrentPosition = MainActivity.mysong.getMediaPlayer().getCurrentPosition();
                     seekBar.setProgress(mCurrentPosition);
                 }
                 handler.postDelayed(this, 1000);
