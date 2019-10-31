@@ -1,11 +1,11 @@
 package com.example.musicapp;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +17,8 @@ public class NowPlaying extends AppCompatActivity {
     private ImageView artistImage;
     private TextView tvAlbumTitle;
     private TextView tvSongTitle;
+    private TextView tvArtistName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,13 +29,22 @@ public class NowPlaying extends AppCompatActivity {
         cacheViews();
         setListeners();
 
+        MediaPlayer mp=MainActivity.mysong.getMediaPlayer();
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                MainActivity.mysong.playNext();
+                updateScreen();
+            }
+        });
+
         if (!MainActivity.mysong.isNull()) {
 
             artistImage.setImageResource(MainActivity.playList.get(MainActivity.mysong.currSongIndex).getIcon());
             tvSongTitle.setText(MainActivity.playList.get(MainActivity.mysong.currSongIndex).getSongTitle());
-            //TODO change the function below to get Album
             iBtnPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
-            tvAlbumTitle.setText(MainActivity.playList.get(MainActivity.mysong.currSongIndex).getArtistName());
+            tvAlbumTitle.setText(MainActivity.playList.get(MainActivity.mysong.currSongIndex).getAlbumName());
+            tvArtistName.setText(MainActivity.playList.get(MainActivity.mysong.currSongIndex).getArtistName());
         }
     }
 
@@ -44,6 +55,7 @@ public class NowPlaying extends AppCompatActivity {
         artistImage = findViewById(R.id.artist_image);
         tvAlbumTitle = findViewById(R.id.album_name);
         tvSongTitle = findViewById(R.id.tv_song_name);
+        tvArtistName = findViewById(R.id.artist_name);
     }
 
     private void updateScreen() {
@@ -51,6 +63,7 @@ public class NowPlaying extends AppCompatActivity {
         tvAlbumTitle.setText(currSong.getArtistName());
         tvSongTitle.setText(currSong.getSongTitle());
         artistImage.setImageResource(currSong.getIcon());
+        tvArtistName.setText(MainActivity.playList.get(MainActivity.mysong.currSongIndex).getArtistName());
         if (!MainActivity.mysong.isPlaying())
             iBtnPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
         else
@@ -60,12 +73,9 @@ public class NowPlaying extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(MainActivity.mysong.isPlaying())
-        {
+        if (MainActivity.mysong.isPlaying()) {
             iBtnPlay.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
-        }
-        else
-        {
+        } else {
             iBtnPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
         }
     }

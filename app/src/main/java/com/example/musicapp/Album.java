@@ -1,14 +1,15 @@
 package com.example.musicapp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Album {
-    private List<Song> songList;
+    private ArrayList<Song> songList;
     private String albumName;
     private String Artist;
     private int AlbumImage;
 
-    public Album(List<Song> songList, String albumName, String artist, int albumImage) {
+    public Album(ArrayList<Song> songList, String albumName, String artist, int albumImage) {
         this.songList = songList;
         this.albumName = albumName;
         Artist = artist;
@@ -19,7 +20,7 @@ public class Album {
         return AlbumImage;
     }
 
-    public List<Song> getSongList() {
+    public ArrayList<Song> getSongList() {
         return songList;
     }
 

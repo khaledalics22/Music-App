@@ -33,12 +33,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setNavBar();
         cacheViews();
-        if(playList==null) {
+        if (playList == null) {
             playList = new ArrayList<Song>();
             loadSongs();
             mysong = new Media();
-        }
-        else{
+        } else {
             showController();
         }
         SongItemAdapter playListAdapter = new SongItemAdapter(this, playList);
@@ -86,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
         mToast = Toast.makeText(context, msg, period);
         mToast.show();
     }
-    private void setNavBar()
-    {
+
+    private void setNavBar() {
         Button btnSearch = findViewById(R.id.btn_search);
         Button btnLibrary = findViewById(R.id.btn_library);
         Button btnBuyOnline = findViewById(R.id.btn_buy_online);
@@ -146,40 +145,10 @@ public class MainActivity extends AppCompatActivity {
      */
     public static boolean isPlaying = false;
 
-    private void loadSongs() {
-        /*
-         here we are supposed to load the media files from device
-         and add data to playlist ArrayList
-         */
-        int id = 0;
-        playList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
-                "Unknown", "this is a song published at 2017", "believer", id));
-        playList.add(new Song(R.raw.alekhlas, R.mipmap.ic_launcher,
-                "Mushary Al Afasy", "this is a song published at 2017", "Al-Ekhlas", ++id));
-        playList.add(new Song(R.raw.youcametome, R.mipmap.ic_launcher,
-                "Samy Youssef", "this is a song published at 2017", "youcametome", ++id));
-        playList.add(new Song(R.raw.alhumaza, R.mipmap.ic_launcher,
-                "Mushary Al Afasy", "this is a song published at 2017", "Al-Hummaza", ++id));
-        playList.add(new Song(R.raw.alkaferoon, R.mipmap.ic_launcher,
-                "Mushary Al Afasy", "this is a song published at 2017", "Al-Kaferoon", ++id));
-        playList.add(new Song(R.raw.lovethewayyouare, R.mipmap.ic_launcher,
-                "Unknown", "this is a song published at 2017", "lovethewayyouare", ++id));
-        playList.add(new Song(R.raw.almaaon, R.mipmap.ic_launcher,
-                "Mushary Al Afasy", "this is a song published at 2017", "Al-Maaon", ++id));
-        playList.add(new Song(R.raw.almasad, R.mipmap.ic_launcher,
-                "Mushary Al Afasy", "this is a song published at 2017", "Al-masad", ++id));
-        playList.add(new Song(R.raw.alnasr, R.mipmap.ic_launcher,
-                "Mushary Al Afasy", "this is a song published at 2017", "Al-Nasr", ++id));
-        playList.add(new Song(R.raw.altakathur, R.mipmap.ic_launcher,
-                "Mushary Al Afasy", "this is a song published at 2017", "Al-Takathur", ++id));
-        playList.add(new Song(R.raw.kareaa, R.mipmap.ic_launcher,
-                "Mushary Al Afasy", "this is a song published at 2017", "Al-kareaa", ++id));
-    }
-
     public class Media {
         private AudioManager audioManager;
         private MediaPlayer mediaPlayer = null;
-        public  int currSongIndex =0;
+        public int currSongIndex = 0;
         private AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
             @Override
             public void onAudioFocusChange(int i) {
@@ -253,10 +222,14 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
-                        releaseAudio();
+                        playNext();
                     }
                 });
             }
+        }
+
+        public MediaPlayer getMediaPlayer() {
+            return mediaPlayer;
         }
 
         public void playNext() {
@@ -269,8 +242,47 @@ public class MainActivity extends AppCompatActivity {
                             getResources().getString(R.string.first), Toast.LENGTH_SHORT).show();
                 }
                 playAudio();
+
             }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        /*
+        i don't want to stop the music here.
+        i want it to still plays when the app is invisible
+         */
+    }
+    private void loadSongs() {
+        /*
+         here we are supposed to load the media files from device
+         and add data to playlist ArrayList
+         */
+        int id = 0;
+        playList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
+                "Dragons", "this is a song published at 2017", "believer", id, "believer"));
+        playList.add(new Song(R.raw.alekhlas, R.mipmap.ic_launcher,
+                "Mushary Al Afasy", "this is a song published at 2017", "Al-Ekhlas", ++id));
+        playList.add(new Song(R.raw.youcametome, R.mipmap.ic_launcher,
+                "Samy Youssef", "this is a song published at 2017", "you came to me", ++id, "you came to me"));
+        playList.add(new Song(R.raw.alhumaza, R.mipmap.ic_launcher,
+                "Mushary Al Afasy", "this is a song published at 2017", "Al-Hummaza", ++id));
+        playList.add(new Song(R.raw.alkaferoon, R.mipmap.ic_launcher,
+                "Mushary Al Afasy", "this is a song published at 2017", "Al-Kaferoon", ++id));
+        playList.add(new Song(R.raw.lovethewayyouare, R.mipmap.ic_launcher,
+                "Unknown", "this is a song published at 2017", "love the way you are", ++id));
+        playList.add(new Song(R.raw.almaaon, R.mipmap.ic_launcher,
+                "Mushary Al Afasy", "this is a song published at 2017", "Al-Maaon", ++id));
+        playList.add(new Song(R.raw.almasad, R.mipmap.ic_launcher,
+                "Mushary Al Afasy", "this is a song published at 2017", "Al-masad", ++id));
+        playList.add(new Song(R.raw.alnasr, R.mipmap.ic_launcher,
+                "Mushary Al Afasy", "this is a song published at 2017", "Al-Nasr", ++id));
+        playList.add(new Song(R.raw.altakathur, R.mipmap.ic_launcher,
+                "Mushary Al Afasy", "this is a song published at 2017", "Al-Takathur", ++id));
+        playList.add(new Song(R.raw.kareaa, R.mipmap.ic_launcher,
+                "Mushary Al Afasy", "this is a song published at 2017", "Al-kareaa", ++id));
     }
 
 }

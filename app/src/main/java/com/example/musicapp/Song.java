@@ -5,18 +5,45 @@ public class Song {
     // temporary
     private int songResource;
     private int icon;
-    private String ArtistName;
+    private String artistName;
     private String description;
     private String songTitle;
+    private String albumName=null;
     /*
          I use this to indicate to the position in the ArrayList so that i can get it when i search
      */
     private int Id;
 
+    public String getAlbumName() {
+            return albumName;
+    }
+
+    public Song( int songResource, int icon, String artistName, String description, String songTitle, int id, String albumName) {
+        this.songResource = songResource;
+        this.icon = icon;
+        this.artistName = artistName;
+        this.description = description;
+        this.songTitle = songTitle;
+        this.albumName = albumName;
+        Id = id;
+    }
+
+    public void setSongResource(int songResource) {
+        this.songResource = songResource;
+    }
+
+    public void setAlbumName(String albumName) {
+        this.albumName = albumName;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
     public Song(int songResource, int icon, String artistName, String description, String songTitle, int Id) {
         this.songResource = songResource;
         this.icon = icon;
-        ArtistName = artistName;
+        this.artistName = artistName;
         this.description = description;
         this.songTitle = songTitle;
         this.Id = Id;
@@ -47,7 +74,7 @@ public class Song {
     }
 
     public String getArtistName() {
-        return ArtistName;
+        return artistName;
     }
 
     public String getDescription() {
@@ -63,7 +90,7 @@ public class Song {
     }
 
     public void setArtistName(String artistName) {
-        ArtistName = artistName;
+        this.artistName = artistName;
     }
 
     public void setDescription(String description) {

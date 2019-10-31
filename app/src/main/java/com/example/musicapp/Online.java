@@ -36,7 +36,6 @@ public class Online extends AppCompatActivity implements onlineAdapter.OnClickIt
         attachViews();
         loadOnlineFiles();
         setNavBar();
-
         /*
              recycler view
          */
@@ -44,7 +43,6 @@ public class Online extends AppCompatActivity implements onlineAdapter.OnClickIt
         onlineRecycler.setLayoutManager(linearManager);
         adapter = new onlineAdapter(this, onlineList);
         onlineRecycler.setAdapter(adapter);
-
         foundSongs = new ArrayList<>();
     }
 
@@ -88,7 +86,6 @@ public class Online extends AppCompatActivity implements onlineAdapter.OnClickIt
             /*
                 this is supposed to download song online
              */
-
         MainActivity.showToast(this, getString(R.string.succeeded), Toast.LENGTH_SHORT);
     }
 

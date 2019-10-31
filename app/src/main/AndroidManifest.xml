@@ -9,23 +9,22 @@
         android:roundIcon="@mipmap/itunes_01"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AlbumsActivity"
-            android:label="@string/library"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".Online"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/NoActionBar"
-            android:label="@string/online"/>
-        <activity android:name=".Search"
-            android:label="@string/search"
-            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".AlbumsActivity"
+            android:label="@string/album" />
+        <activity
+            android:name=".Online"
+            android:label="@string/online"
+            android:theme="@style/NoActionBar" />
+        <activity
+            android:name=".Search"
+            android:label="@string/search" />
         <activity
             android:name=".NowPlaying"
-            android:label="@string/now_playing"
-            android:parentActivityName=".MainActivity" />
+            android:label="@string/now_playing" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/play_list">
+            android:label="@string/home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

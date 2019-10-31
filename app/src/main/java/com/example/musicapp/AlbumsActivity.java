@@ -90,7 +90,5 @@ public class AlbumsActivity extends AppCompatActivity implements AlbumsAdapter.O
                 "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
         albumList.add(new Album(MainActivity.playList, getString(R.string.album,
                 "me before you"), getString(R.string.Artist_name, "khaled"), R.drawable.ic_launcher_background));
-
-
     }
 }
