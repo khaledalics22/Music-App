@@ -133,14 +133,16 @@ public class Online extends AppCompatActivity implements onlineAdapter.OnClickIt
     private void searchForSongOnline(String songName) {
         /*
              suppose to  search online
-
              this code is just for checking
          */
+        onlineList.addAll(foundSongs);
+        foundSongs.clear();
         foundSongs.addAll(onlineList);
         for (int i = 0; i < onlineList.size(); i++) {
-            if (onlineList.get(i).getSongTitle().contains(songName)) {
-                foundSongs.add(onlineList.get(i));
-            } else onlineList.remove(onlineList.get(i));
+            if (searchView.getQuery().length()> 0 &&!onlineList.get(i).getSongTitle().contains(songName)) {
+                onlineList.remove(onlineList.get(i));
+                i--;
+            }
         }
         adapter.notifyDataSetChanged();
         if (searchView.getQuery().length() != 0 && onlineList.size() == 0) {

@@ -219,18 +219,6 @@ public class MainActivity extends AppCompatActivity {
             if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), MainActivity.playList.get(currSongIndex).getSongResource());
                 mediaPlayer.start();
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mediaPlayer) {
-                        playNext();
-                    }
-                });
-                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mediaPlayer) {
-
-                    }
-                });
             }
         }
 

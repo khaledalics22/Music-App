@@ -8,17 +8,17 @@ public class Song {
     private String artistName;
     private String description;
     private String songTitle;
-    private String albumName=null;
+    private String albumName = null;
     /*
          I use this to indicate to the position in the ArrayList so that i can get it when i search
      */
     private int Id;
 
     public String getAlbumName() {
-            return albumName;
+        return albumName;
     }
 
-    public Song( int songResource, int icon, String artistName, String description, String songTitle, int id, String albumName) {
+    public Song(int songResource, int icon, String artistName, String description, String songTitle, int id, String albumName) {
         this.songResource = songResource;
         this.icon = icon;
         this.artistName = artistName;
@@ -58,7 +58,9 @@ public class Song {
     }
 
     public String getSongTitle() {
-        return songTitle;
+        if (songTitle != null)
+            return songTitle;
+        return "";
     }
 
     public void setSongTitle(String songTitle) {

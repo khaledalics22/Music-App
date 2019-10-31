@@ -21,9 +21,6 @@ public class NowPlaying extends AppCompatActivity {
     private TextView tvSongTitle;
     private TextView tvArtistName;
 
-    private SeekBar seekBar;
-    private Handler handler;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,59 +30,21 @@ public class NowPlaying extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         cacheViews();
         setListeners();
-        handler = new Handler();
-
 
         MainActivity.mysong.getMediaPlayer().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 MainActivity.mysong.playNext();
                 updateScreen();
-                showSeekBar();
             }
         });
 
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-              if(b)
-                  MainActivity.mysong.getMediaPlayer().seekTo(i);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        showSeekBar();
         artistImage.setImageResource(MainActivity.playList.get(MainActivity.mysong.currSongIndex).getIcon());
         tvSongTitle.setText(MainActivity.playList.get(MainActivity.mysong.currSongIndex).getSongTitle());
         iBtnPlay.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
         tvAlbumTitle.setText(MainActivity.playList.get(MainActivity.mysong.currSongIndex).getAlbumName());
         tvArtistName.setText(MainActivity.playList.get(MainActivity.mysong.currSongIndex).getArtistName());
 
-    }
-    private void showSeekBar()
-    {
-        int duration =MainActivity.mysong.getMediaPlayer().getDuration();
-        //Make sure you update Seekbar on UI thread
-        seekBar.setMax(duration);
-        this.runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                if (MainActivity.mysong.isPlaying()) {
-                    int mCurrentPosition = MainActivity.mysong.getMediaPlayer().getCurrentPosition();
-                    seekBar.setProgress(mCurrentPosition);
-                }
-                handler.postDelayed(this, 1000);
-            }
-        });
     }
 
     private void cacheViews() {
@@ -96,7 +55,6 @@ public class NowPlaying extends AppCompatActivity {
         tvAlbumTitle = findViewById(R.id.album_name);
         tvSongTitle = findViewById(R.id.tv_song_name);
         tvArtistName = findViewById(R.id.artist_name);
-        seekBar = findViewById(R.id.seek_bar);
 
     }
 
@@ -146,7 +104,6 @@ public class NowPlaying extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 MainActivity.mysong.playNext();
-                seekBar.clearAnimation();
                 updateScreen();
             }
         });
@@ -154,7 +111,6 @@ public class NowPlaying extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 MainActivity.mysong.playPrev();
-                seekBar.clearAnimation();
                 updateScreen();
             }
         });

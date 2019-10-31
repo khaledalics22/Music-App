@@ -12,9 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class onlineAdapter extends RecyclerView.Adapter<onlineAdapter.SongHolder> {
-    ArrayList<Song> songList;
+    List<Song> songList;
     OnClickItemListener clickHandler;
 
     interface OnClickItemListener {
@@ -23,7 +24,7 @@ public class onlineAdapter extends RecyclerView.Adapter<onlineAdapter.SongHolder
         void downloadSong(int position);
     }
 
-    public onlineAdapter(OnClickItemListener listener, ArrayList<Song> songList) {
+    public onlineAdapter(OnClickItemListener listener, List<Song> songList) {
         clickHandler = listener;
         this.songList = songList;
     }
