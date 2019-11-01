@@ -35,7 +35,7 @@ public class Search extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchForSong(searchView.getQuery().toString());
+                    searchForSong(searchView.getQuery().toString());
                 return false;
             }
         });
@@ -102,11 +102,11 @@ public class Search extends AppCompatActivity {
     private void searchForSong(String songName) {
         foundSongs.clear();
         for (int i = 0; i < MainActivity.playList.size(); i++) {
-            if (MainActivity.playList.get(i).getSongTitle().contains(songName)) {
+            if (! songName.matches("") && MainActivity.playList.get(i).getSongTitle().contains(songName)) {
                 foundSongs.add(MainActivity.playList.get(i));
             }
         }
-        if (searchView.getQuery().length() != 0 && foundSongs.size() == 0) {
+        if (!songName.matches("") && foundSongs.size() == 0) {
             tvNotFound.setVisibility(View.VISIBLE);
         } else {
             tvNotFound.setVisibility(View.INVISIBLE);

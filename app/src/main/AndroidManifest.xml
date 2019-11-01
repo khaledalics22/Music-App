@@ -11,14 +11,17 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".AlbumsActivity"
-            android:label="@string/albums" />
+            android:label="@string/albums"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".Online"
             android:label="@string/online"
-            android:theme="@style/NoActionBar" />
+            android:theme="@style/NoActionBar"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".Search"
-            android:label="@string/search" />
+            android:label="@string/search"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".NowPlaying"
             android:label="@string/now_playing"

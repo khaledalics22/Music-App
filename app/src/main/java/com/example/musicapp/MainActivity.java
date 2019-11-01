@@ -37,21 +37,20 @@ public class MainActivity extends AppCompatActivity {
            check if playlist was not loaded
            else just show current song at controller
         */
-        if (playList == null) {
+
+
+        if(playList==null){
             playList = new ArrayList<Song>();
             loadSongs();
-            mySong = new Media();
-        } else {
-            showController();
-        }
+             mySong = new Media();}
         SongItemAdapter playListAdapter = new SongItemAdapter(this, playList);
         lvPlayList.setAdapter(playListAdapter);
         lvPlayList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 mySong.currSongIndex = i;
-                showController();
                 mySong.playAudio();
+                showController();
             }
         });
 
@@ -69,7 +68,11 @@ public class MainActivity extends AppCompatActivity {
         playListController.setVisibility(View.VISIBLE);
         ImageView iv = playListController.findViewById(R.id.frame_artist_image);
         iv.setImageResource(currSong.getIcon());
+        if(mySong.isPlaying())
         iBtnPlay.setImageResource(R.drawable.ic_pause_black_24dp);
+        else   iBtnPlay.setImageResource(R.drawable.ic_play_arrow_black_24dp);
+
+
         TextView tvSongName;
         TextView tvArtistName;
         tvSongName = findViewById(R.id.tv_song_name_plController);
@@ -81,11 +84,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (mySong.isPlaying()) {
-            iBtnPlay.setImageResource(R.drawable.ic_pause_black_24dp);
+        if (mySong.mediaPlayer!=null) {
             showController();
-        } else {
-            iBtnPlay.setImageResource(R.drawable.ic_play_arrow_black_24dp);
         }
     }
 
@@ -182,16 +182,20 @@ public class MainActivity extends AppCompatActivity {
                 switch (i) {
                     case AudioManager.AUDIOFOCUS_REQUEST_GRANTED:
                         mediaPlayer.start();
+                        showController();
                         break;
                     case AudioManager.AUDIOFOCUS_LOSS:
                         mediaPlayer.stop();
                         releaseAudio();
+                        showController();
                         break;
                     case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                         mediaPlayer.pause();
+                        showController();
                         break;
                     case AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK:
                         mediaPlayer.pause();
+                        showController();
                         break;
                 }
             }
@@ -201,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
             if (mediaPlayer != null) {
                 mediaPlayer.release();
                 mediaPlayer = null;
+                audioManager.abandonAudioFocus(audioFocusChangeListener);
             }
         }
 
@@ -253,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
                         playNext();
+                        showController();
                     }
                 });
             }
@@ -281,10 +287,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        /*
-        i don't want to stop the music here.
-        i want it to still plays when the app is invisible
-         */
+        mySong.releaseAudio();
     }
 
     /*
@@ -306,16 +309,16 @@ public class MainActivity extends AppCompatActivity {
         playList.add(new Song(R.raw.believer, R.mipmap.ic_launcher,
                 "Dragons", "this is a song published at 2017", "believer", id,
                 "believer"));
-        playList.add(new Song(R.raw.alekhlas, R.mipmap.ic_launcher,
+        playList.add(new Song(R.raw.alekhlas, R.mipmap.ic_launcher_round,
                 "Mushary Al Afasy", "this is a song published at 2017", "Al-Ekhlas", ++id));
         playList.add(new Song(R.raw.youcametome, R.mipmap.ic_launcher,
                 "Samy Youssef", "this is a song published at 2017", "you came to me", ++id,
                 "you came to me"));
-        playList.add(new Song(R.raw.alhumaza, R.mipmap.ic_launcher,
+        playList.add(new Song(R.raw.alhumaza, R.mipmap.ic_launcher_round,
                 "Mushary Al Afasy", "this is a song published at 2017", "Al-Hummaza", ++id));
         playList.add(new Song(R.raw.alkaferoon, R.mipmap.ic_launcher,
                 "Mushary Al Afasy", "this is a song published at 2017", "Al-Kaferoon", ++id));
-        playList.add(new Song(R.raw.lovethewayyouare, R.mipmap.ic_launcher,
+        playList.add(new Song(R.raw.lovethewayyouare, R.mipmap.ic_launcher_round,
                 "Unknown", "this is a song published at 2017", "love the way you are", ++id));
         playList.add(new Song(R.raw.almaaon, R.mipmap.ic_launcher,
                 "Mushary Al Afasy", "this is a song published at 2017", "Al-Maaon", ++id));
